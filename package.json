@@ -1,0 +1,80 @@
+{
+  "name": "league-client-enhancer",
+  "description": "League Of Legends Client Enhancer",
+  "version": "1.0.0",
+  "private": true,
+  "main": "public/electron.js",
+  "homepage": "https://github.com/league-client-enhancer",
+  "author": {
+    "name": "Jakub Kot",
+    "email": "j4kub.kko7@gmail.com"
+  },
+  "scripts": {
+    "react-start": "cross-env BROWSER=none react-scripts start",
+    "react-build": "react-scripts build",
+    "react-test": "react-scripts test --env=jsdom",
+    "react-eject": "react-scripts eject",
+    "electron-build": "electron-builder",
+    "electron-run": "electron .",
+    "release": "yarn react-build && electron-builder --publish=never",
+    "build": "npm run react-build && npm run electron-build",
+    "start": "concurrently \"npm run react-start\" \"npm run electron-run\""
+  },
+  "dependencies": {
+    "@rmwc/button": "6.1.3",
+    "@rmwc/card": "6.1.3",
+    "@rmwc/icon-button": "6.1.3",
+    "@rmwc/list": "6.1.3",
+    "@rmwc/menu": "6.1.3",
+    "@rmwc/provider": "6.1.3",
+    "@rmwc/snackbar": "6.1.3",
+    "@rmwc/tabs": "6.1.3",
+    "@rmwc/theme": "6.1.2",
+    "@rmwc/typography": "6.1.3",
+    "axios": "0.19.2",
+    "electron-is-dev": "1.2.0",
+    "electron-store": "5.2.0",
+    "lcu-connector": "2.1.3",
+    "lodash": "4.17.19",
+    "prettier": "2.0.5",
+    "prop-types": "15.7.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "5.2.0",
+    "redux": "^4.0.5",
+    "redux-persist": "6.0.0",
+    "redux-persist-electron-storage": "2.1.0",
+    "redux-thunk": "^2.3.0",
+    "update-electron-app": "^1.5.0"
+  },
+  "devDependencies": {
+    "concurrently": "5.2.0",
+    "cross-env": "7.0.2",
+    "electron": "9.1.0",
+    "electron-builder": "^22.7.0",
+    "electron-devtools-installer": "3.1.0",
+    "react-scripts": "3.4.1",
+    "wait-on": "5.0.3"
+  },
+  "build": {
+    "appId": "com.github.kko7.league-client-enhancer",
+    "productName": "League Client Enhancer",
+    "copyright": "Copyright © 2020 KKo7",
+    "publish": {
+      "provider": "github"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
