@@ -99,8 +99,8 @@ class Service extends Component {
                                         data: object.data,
                                         pluginName: object.pluginName
                                     })
-                                    this.setState({ snackbarOpen: false })
                                 }
+                                this.setState({ snackbarOpen: false })
                             }}/>
                         );
                     })}
