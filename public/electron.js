@@ -126,16 +126,22 @@ ipcMain.on('lcu-api-request', (event, data) => {
         httpsAgent: new https.Agent({
             rejectUnauthorized: false
         }),
-    }).then(resp => {
+    }).then((response) => {
         mainWindow.webContents.send('lcu-api-data', {
             pluginName: data.pluginName,
-            data: resp.data
+            response: {
+                status: response.status,
+                data: response.data
+            }
         })
-    }).catch(error => {
+    }).catch((error) => {
         mainWindow.webContents.send('lcu-api-data', {
             pluginName: data.pluginName,
-            data: error.response.data
-        })
+            response: {
+                status: error.response.status,
+                data: error.response.data
+            }
+        })        
     })
 })
 

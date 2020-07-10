@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import { Snackbar, SnackbarAction } from "@rmwc/snackbar"
 class Service extends Component {
 
+
     constructor(props) {
         super(props);
         this.state = {
@@ -83,14 +84,16 @@ class Service extends Component {
         return (
             <>
                 <Snackbar
-                    open={() => this.state.snackbarOpen}
+                    open={this.state.snackbarOpen}
                     onClose={() => this.setState({ snackbarOpen: false})}
                     message={this.state.snackbarMessage}
                     stacked
                     dismissesOnAction
                     action={this.state.snackbarActions.map(action => {
                         return (
-                            <SnackbarAction label={action.label} onClick={() => {
+                            <SnackbarAction label={action.label} onClick={(event) => {
+                                event.preventDefault()
+                                this.setState({ snackbarOpen: false })
                                 for (const object of action.toSend) {
                                     ipcRenderer.send(object.channel, {
                                         lcuData: object.lcuData,
@@ -100,7 +103,6 @@ class Service extends Component {
                                         pluginName: object.pluginName
                                     })
                                 }
-                                this.setState({ snackbarOpen: false })
                             }}/>
                         );
                     })}
