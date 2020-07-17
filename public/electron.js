@@ -1,8 +1,4 @@
 const electron = require("electron");
-const {
-    default: installExtension,
-    REACT_DEVELOPER_TOOLS,
-} = require("electron-devtools-installer");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const LeagueConnector = require("lcu-connector");
@@ -11,11 +7,11 @@ const axios = require("axios")
 const https = require("https")
 
 const connector = new LeagueConnector();
-const {app, BrowserWindow, ipcMain} = electron;
+const {app, BrowserWindow, ipcMain, Tray} = electron;
 
 app.commandLine.appendSwitch('disable-web-security');
 
-let mainWindow;
+let mainWindow, tray;
 
 // noinspection JSValidateTypes
 updateElectronApp({
@@ -23,12 +19,17 @@ updateElectronApp({
     updateInterval: "20 minutes",
 });
 
-if (isDev) {
-    app.whenReady().then(() => {
-        installExtension([REACT_DEVELOPER_TOOLS])
-            .then((name) => console.log(`Added Extension:  ${name}`))
-            .catch((err) => console.log("An error occurred: ", err));
-    });
+const lock = app.requestSingleInstanceLock();
+if (!lock) app.quit();
+else {
+  app.on('second-instance', function (argv, cwd) {
+    if (mainWindow) {
+      if (!mainWindow.isVisible()) mainWindow.show();
+      else if (mainWindow.isMinimized()) mainWindow.restore();
+
+      win.focus();
+    }
+  });
 }
 
 function createWindow() {
@@ -47,15 +48,13 @@ function createWindow() {
         },
     });
 
-    mainWindow.setMenu(null);
-    mainWindow
-        .loadURL(
-            isDev
-                ? "http://localhost:3000"
-                : `file://${path.join(__dirname, "../build/index.html")}`
-        )
-        .then(() => console.log("[Electron] Loaded index.html"))
-        .catch(console.error);
+    mainWindow.loadURL(
+        isDev
+          ? "http://localhost:3000"
+          : `file://${path.join(__dirname, "../build/index.html")}`
+      )
+      .then(() => console.log("[Electron] Loaded mainWindow"))
+      .catch(console.error);
 
     mainWindow.webContents.on("did-finish-load", () => {
         windowLoaded = true;
@@ -71,7 +70,10 @@ function createWindow() {
 
     if (isDev) mainWindow.openDevTools({mode: "detach"});
 
-    mainWindow.on("closed", () => (mainWindow = null));
+    mainWindow.on("closed", () => {
+        if (tray && !tray.isDestroyed()) tray.destroy();
+        mainWindow = tray = null
+    });
 
     connector.on("connect", (data) => {
         LCUData = data;
@@ -112,6 +114,27 @@ app.on("activate", () => {
     if (mainWindow === null) {
         createWindow();
     }
+});
+
+ipcMain.on('win-show', (event, inactive) => {
+    if (!mainWindow.isVisible()) mainWindow[inactive ? 'showInactive' : 'show']();
+  });
+  
+ipcMain.on('win-hide', () => {
+    mainWindow.hide()
+});
+
+ipcMain.on('tray', (event, show) => {
+    if (show && tray && !tray.isDestroyed()) return;
+    else if (!show) {
+      if (!tray || tray && tray.isDestroyed()) return;
+      return tray.destroy();
+    }
+  
+    tray = new Tray(path.join(__dirname + '/favicon.' + (process.platform === 'win32' ? 'ico' : 'png')));
+    tray.setToolTip('Click here to show League Client Enhancer');
+  
+    tray.on('click', () => mainWindow.isVisible() ? mainWindow.hide() : mainWindow.showInactive());
 });
 
 ipcMain.on('lcu-api-request', (event, data) => {

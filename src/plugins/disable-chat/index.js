@@ -18,11 +18,10 @@ export function doInBackground() {
 
 export default function pluginInfo() {
     return {
-        name: "Disable chat",
+        name: "disable-chat",
         author: "kko7",
         enabled: false,
         bg: doInBackground,
-        url: `${window.location.origin}/plugin/disable-chat`,
         shortDescription: "Appear offline for your friends when still being able to play",
         longDescription: "As in title",
     }

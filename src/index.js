@@ -1,7 +1,7 @@
 // Imports
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -13,6 +13,8 @@ import "@rmwc/card/styles";
 import "@rmwc/menu/styles";
 import "@rmwc/list/styles";
 import '@rmwc/snackbar/styles';
+import '@rmwc/switch/styles';
+import '@rmwc/grid/styles';
 
 // App Imports
 import App from "./app";

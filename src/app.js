@@ -36,18 +36,17 @@ const theme = {
 
 const App = () => (
   <ThemeProvider options={theme} className="app__root" tag="div">
+    <Service>
       <Switch>
-        <Service>
-          <Route path="/plugin/dodge-queue" component={DodgeQueueSettings} />
-          <Route path="/plugin/disable-chat" component={DisableChatSettings} />
-
-          <Layout className="app__content">
-                <Route exact path="/" component={Home} />
-                <Route exact path="/plugins" component={Plugins} />
-                <Route exact path="/settings" component={Settings} />
-            </Layout>
-        </Service>
+        <Route path="/plugin/easy-queue-dodge" component={DodgeQueueSettings} />
+        <Route path="/plugin/disable-chat" component={DisableChatSettings} />
+        <Layout className="app__content">
+          <Route exact path="/" component={Home} />
+          <Route exact path="/plugins" component={Plugins} />
+          <Route exact path="/settings" component={Settings} />
+        </Layout>
       </Switch>
+      </Service>
   </ThemeProvider>
 );
 

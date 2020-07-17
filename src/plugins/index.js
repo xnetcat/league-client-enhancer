@@ -1,5 +1,5 @@
-import DodgeQueueInfo, { DodgeQueueSettings, doInBackground as DodgeQueueJob } from './DodgeQueue'
-import DisableChatInfo, { DisableChatSettings, doInBackground as DisableChatJob } from './DisableChat'
+import DodgeQueueInfo, { DodgeQueueSettings, doInBackground as DodgeQueueJob } from './easy-queue-dodge'
+import DisableChatInfo, { DisableChatSettings, doInBackground as DisableChatJob } from './disable-chat'
 
 export {
    DodgeQueueSettings, DodgeQueueJob,

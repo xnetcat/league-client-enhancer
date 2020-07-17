@@ -2,9 +2,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+
 // Ui imports
 import {CardActionButton, CardActionButtons, CardActionIcon, CardActionIcons, CardActions,} from "@rmwc/card";
 
+// App imports
 import {setCurrentPlugins} from "../../../actions/plugins";
 
 class PluginActions extends React.Component {
@@ -21,9 +23,12 @@ class PluginActions extends React.Component {
     this.props.setCurrentPlugins(newArray)
   }
 
-  createWindow (event, url) {
+  createWindow (event, name) {
+    const isDev = window.require('electron-is-dev')
     event.preventDefault()
-    window.open(url)
+    window.open(isDev
+      ? `http://localhost:3000/#/plugin/${name}`
+      : `#/plugin/${name}`)
   }
 
   render () {
@@ -33,7 +38,7 @@ class PluginActions extends React.Component {
             <CardActionButton onClick={(event) => this.disablePlugin(event, this.props.id)}>
               {this.props.enabled ? 'Disable': 'Enable'}
             </CardActionButton>
-            <CardActionButton onClick={(event) => this.createWindow(event, this.props.url)}>
+            <CardActionButton onClick={(event) => this.createWindow(event, this.props.name)}>
               Settings
             </CardActionButton>
           </CardActionButtons>

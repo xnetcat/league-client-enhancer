@@ -4,8 +4,6 @@ import thunk from "redux-thunk";
 
 import { rootReducer } from "./reducers/root";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 // Store
 const store = createStore(persistReducer({
         key: 'root',
@@ -13,7 +11,7 @@ const store = createStore(persistReducer({
         blacklist: ['plugins']
     }, rootReducer),
 
-    composeEnhancers(applyMiddleware(thunk))
+    compose(applyMiddleware(thunk))
 );
 
 const persistedStore = persistStore(store)

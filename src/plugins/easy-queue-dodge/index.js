@@ -69,7 +69,6 @@ export default function pluginInfo() {
         author: "kko7",
         enabled: false,
         bg: doInBackground,
-        url: `${window.location.origin}/plugin/easy-queue-dodge`,
         shortDescription: "Dodge without closing the entire client.",
         longDescription: "As in title",
     }
