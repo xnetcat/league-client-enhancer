@@ -13,7 +13,7 @@ class PluginCard extends Component {
       <>
         <br />
         <br />
-        <Card style={{ width: "90%", margin: "0 auto" }}>
+        <Card style={{ width: "80%", margin: "0 auto" }}>
           <PluginPrimaryActions
             style={{ margin: 0 }}
             plugin={this.props.plugin}
