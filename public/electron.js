@@ -11,7 +11,7 @@ const {app, BrowserWindow, ipcMain, Tray} = electron;
 
 app.commandLine.appendSwitch('disable-web-security');
 
-let mainWindow, tray;
+let mainWindow, tray, LCUData;
 
 // noinspection JSValidateTypes
 updateElectronApp({
@@ -33,7 +33,6 @@ else {
 }
 
 function createWindow() {
-    let LCUData;
     let windowLoaded = false;
 
     mainWindow = new BrowserWindow({
@@ -138,34 +137,42 @@ ipcMain.on('tray', (event, show) => {
 });
 
 ipcMain.on('lcu-api-request', (event, data) => {
-    const {username, password, address, port, protocol} = data.lcuData
 
-    axios({
-        method: data.method,
-        url: `${protocol}://${address}:${port}${data.endpoint}`,
-        headers: {
-            'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
-        },
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        }),
-    }).then((response) => {
-        mainWindow.webContents.send('lcu-api-data', {
-            pluginName: data.pluginName,
-            response: {
-                status: response.status,
-                data: response.data
-            }
+    if (!!LCUData) {
+        const {username, password, address, port, protocol} = LCUData
+        axios({
+            method: data.method,
+            url: `${protocol}://${address}:${port}${data.endpoint}`,
+            headers: {
+                'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false
+            }),
+        }).then((response) => {
+            mainWindow.webContents.send('lcu-api-data', {
+                pluginName: data.pluginName,
+                response: {
+                    status: response.status,
+                    data: response.data
+                }
+            })
+        }).catch((error) => {
+            if (error.response === undefined) {
+               console.log('[Electron] Not connected to lcu')
+               // We send few requests before LCUData is null,
+               // so we can ignore this
+            } else {
+                mainWindow.webContents.send('lcu-api-data', {
+                    pluginName: data.pluginName,
+                    response: {
+                        status: error.response.status,
+                        data: error.response.data
+                    }
+                })
+            }        
         })
-    }).catch((error) => {
-        mainWindow.webContents.send('lcu-api-data', {
-            pluginName: data.pluginName,
-            response: {
-                status: error.response.status,
-                data: error.response.data
-            }
-        })        
-    })
+    }
 })
 
 ipcMain.on('notification-request', (event, data) => {

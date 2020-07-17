@@ -12,7 +12,7 @@ export class DodgeQueueSettings extends React.Component{
     }
 }
 
-export function doInBackground(lcuData) {
+export function doInBackground() {
     const ipcRenderer = window.require('electron').ipcRenderer
     let inChampSelect = false
 
@@ -29,7 +29,6 @@ export function doInBackground(lcuData) {
                                 label: 'Dodge queue',
                                 toSend: [{
                                     channel: 'lcu-api-request',
-                                    lcuData,
                                     endpoint: '/lol-login/v1/session/invoke?destination=gameService&method=quitGame',
                                     method: 'post',
                                     data: {
@@ -38,7 +37,6 @@ export function doInBackground(lcuData) {
                                     pluginName: 'easy-queue-dodge'
                                 },{
                                     channel: 'lcu-api-request',
-                                    lcuData,
                                     endpoint: '/lol-lobby/v2/lobby',
                                     method: 'delete',
                                     data: {},
@@ -52,14 +50,13 @@ export function doInBackground(lcuData) {
             }
         }
     })
-    return setInterval(() => {       
+    return setInterval(() => {
         ipcRenderer.send('lcu-api-request', {
-            lcuData,
             pluginName: 'easy-queue-dodge',
             endpoint: '/lol-champ-select/v1/session',
             method: 'get',
             data: {}
-        })
+        })        
     }, 1000)
 }
 

@@ -22,6 +22,10 @@ class Service extends Component {
             return true
         }
 
+        if (nextProps.lcuData !== this.props.lcuData) {
+            return true
+        }
+
         return nextState.snackbarOpen !== this.state.snackbarOpen;
     }
 
@@ -36,7 +40,7 @@ class Service extends Component {
 
     setPlugins() {
         const activePlugins = this.props.plugins.data.filter(plugin => plugin.enabled)
-        this.setState({activePlugins},function () {
+        this.setState({activePlugins}, function () {
             this.disablePlugins()
             this.startPlugins()
         })
@@ -61,8 +65,7 @@ class Service extends Component {
         for (const plugin of this.state.activePlugins) {
             let duplicate = this.state.backgroundJobs.find(job => job.name === plugin.name)
             if (!!!duplicate) {
-                let jobId = plugin.bg(this.props.lcuData.data)
-                this.state.backgroundJobs.push({id: jobId, name: plugin.name})
+                this.state.backgroundJobs.push({id: plugin.bg(), name: plugin.name})
             }
         }
     }
