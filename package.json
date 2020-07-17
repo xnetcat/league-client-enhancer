@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "main": "public/electron.js",
-  "homepage": "https://github.com/league-client-enhancer",
+  "homepage": "./",
   "author": {
     "name": "Jakub Kot",
     "email": "j4kub.kko7@gmail.com"
@@ -15,19 +15,21 @@
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
-    "electron-run": "electron .",
-    "release": "yarn react-build && electron-builder --publish=never",
+    "electron-start": "electron .",
+    "release": "npm run react-build && electron-builder --publish=onTag",
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"npm run react-start\" \"npm run electron-run\""
   },
   "dependencies": {
     "@rmwc/button": "6.1.3",
     "@rmwc/card": "6.1.3",
+    "@rmwc/grid": "6.0.14",
     "@rmwc/icon-button": "6.1.3",
     "@rmwc/list": "6.1.3",
     "@rmwc/menu": "6.1.3",
     "@rmwc/provider": "6.1.3",
     "@rmwc/snackbar": "6.1.3",
+    "@rmwc/switch": "6.1.3",
     "@rmwc/tabs": "6.1.3",
     "@rmwc/theme": "6.1.2",
     "@rmwc/typography": "6.1.3",
@@ -36,7 +38,6 @@
     "electron-store": "5.2.0",
     "lcu-connector": "2.1.3",
     "lodash": "4.17.19",
-    "prettier": "2.0.5",
     "prop-types": "15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -52,18 +53,26 @@
     "concurrently": "5.2.0",
     "cross-env": "7.0.2",
     "electron": "9.1.0",
+    "prettier": "2.0.5",
     "electron-builder": "^22.7.0",
-    "electron-devtools-installer": "3.1.0",
     "react-scripts": "3.4.1",
-    "wait-on": "5.0.3"
+    "wait-on": "5.1.0"
   },
   "build": {
     "appId": "com.github.kko7.league-client-enhancer",
     "productName": "League Client Enhancer",
     "copyright": "Copyright © 2020 KKo7",
-    "publish": {
-      "provider": "github"
-    }
+    "nsis": {
+      "license": "LICENSE.md"
+    },
+    "files": [
+      "**/*",
+      "build/*",
+      "!*.md",
+      "!.idea",
+      "!.gitignore",
+      "!dist/*"
+    ]
   },
   "browserslist": {
     "production": [
