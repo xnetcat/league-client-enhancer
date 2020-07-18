@@ -3,8 +3,18 @@ import DodgeQueueInfo, {
   doInBackground as DodgeQueueJob,
 } from "./easy-queue-dodge"
 
-export { DodgeQueueSettings, DodgeQueueJob }
+import AutoSaveRunesInfo, {
+  AutoSaveRunesSettings,
+  doInBackground as AutoSaveRunesJob,
+} from "./auto-save-runes"
+
+export {
+  DodgeQueueSettings,
+  DodgeQueueJob,
+  AutoSaveRunesSettings,
+  AutoSaveRunesJob,
+}
 
 export default function pluginsInfo() {
-  return [DodgeQueueInfo()]
+  return [DodgeQueueInfo(), AutoSaveRunesInfo()]
 }
