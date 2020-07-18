@@ -16,10 +16,6 @@ class Home extends Component {
         <footer
           style={{ bottom: 0, width: "100%", left: 0, position: "fixed" }}
         >
-          <Typography tag="h5" style={{ float: "left", paddingLeft: "3%" }}>
-            READY...
-          </Typography>{" "}
-          {/* Show real status: connected etc. */}
           <Typography
             tag="h5"
             style={{ float: "right", paddingRight: "3%" }}
