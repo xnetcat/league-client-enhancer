@@ -137,16 +137,17 @@ class Service extends Component {
                 label={action.label}
                 onClick={(event) => {
                   event.preventDefault()
-                  this.setState({ snackbarOpen: false })
-                  for (const object of action.toSend) {
-                    ipcRenderer.send(object.channel, {
-                      lcuData: object.lcuData,
-                      endpoint: object.endpoint,
-                      method: object.method,
-                      data: object.data,
-                      pluginName: object.pluginName,
-                    })
-                  }
+                  this.setState({ snackbarOpen: false }, () => {
+                    for (const object of action.toSend) {
+                      ipcRenderer.send(object.channel, {
+                        lcuData: object.lcuData,
+                        endpoint: object.endpoint,
+                        method: object.method,
+                        data: object.data,
+                        pluginName: object.pluginName,
+                      })
+                    }
+                  })
                 }}
               />
             )
