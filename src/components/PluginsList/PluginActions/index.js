@@ -3,7 +3,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 
-// Ui imports
+// Ui Imports
 import {
   CardActionButton,
   CardActionButtons,
@@ -12,7 +12,7 @@ import {
   CardActions,
 } from "@rmwc/card"
 
-// App imports
+// App Imports
 import { setCurrentPlugins } from "../../../actions/plugins"
 
 class PluginActions extends React.Component {

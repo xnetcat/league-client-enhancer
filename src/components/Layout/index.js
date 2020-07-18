@@ -2,9 +2,11 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+
 // UI Imports
 import { Typography } from "@rmwc/typography"
-// App imports
+
+// App Imports
 import { dataRemove, setCurrentData } from "../../actions/lcu-data"
 import { NavBar } from "../."
 

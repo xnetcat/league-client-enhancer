@@ -1,8 +1,10 @@
 // Imports
 import React, { Component } from "react"
+
 // UI Imports
 import { Tab, TabBar } from "@rmwc/tabs"
-// App imports
+
+// App Imports
 import { Link } from "react-router-dom"
 
 class NavBar extends Component {

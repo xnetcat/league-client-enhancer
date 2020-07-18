@@ -1,8 +1,10 @@
+// Imports
 import React, { Component } from "react"
+import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
+// App Imports
 import { PluginsList } from "../../components"
-import { connect } from "react-redux"
 
 class Plugins extends Component {
   render() {

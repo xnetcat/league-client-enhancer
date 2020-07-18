@@ -1,6 +1,8 @@
+// Imports
 import React from "react"
 import { Virtuoso } from "react-virtuoso"
 
+// App Imports
 import PluginCard from "./PluginCard"
 
 class PluginsList extends React.Component {

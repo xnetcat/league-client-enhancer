@@ -1,4 +1,7 @@
+// Imports
 import React, { Component } from "react"
+
+// Ui Imports
 import { Typography } from "@rmwc/typography"
 
 class Home extends Component {
