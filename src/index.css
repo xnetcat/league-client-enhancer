@@ -42,3 +42,11 @@ body,
   width: 100%;
   box-sizing: border-box;
 }
+
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: var(--mdc-theme-on-surface);
+}
+
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: var(--mdc-theme-on-surface);
+}
