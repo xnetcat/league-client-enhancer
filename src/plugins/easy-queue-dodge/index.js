@@ -1,15 +1,58 @@
+// Imports
 import React from "react"
-import { Typography } from "@rmwc/typography"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
-export class DodgeQueueSettings extends React.Component {
+// Ui Imports
+import { TextField } from "@rmwc/textfield"
+
+class DodgeQueueSettings extends React.Component {
+  changeConfig(event, pluginName, configName) {
+    event.preventDefault()
+    if (event.target.value.match(/^\d{3,4}$/)) {
+      const ipcRenderer = window.require("electron").ipcRenderer
+
+      ipcRenderer.send("plugins-config-change", {
+        value: event.target.value,
+        configName: configName,
+        pluginName: pluginName,
+      })
+    }
+  }
+
   render() {
     return (
       <>
-        <Typography use="headline1">TEST</Typography>
+        <TextField
+          style={{ width: "30%", margin: "10% auto" }}
+          outlined
+          label="Interval"
+          pattern="^\d{3,4}$"
+          onChange={(event) => {
+            this.changeConfig(
+              event,
+              this.props.match.path.split("/")[2],
+              "interval"
+            )
+          }}
+        />
       </>
     )
   }
 }
+DodgeQueueSettings.propTypes = {
+  plugins: PropTypes.object.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    plugins: state.plugins,
+  }
+}
+
+const connectedComponent = connect(mapStateToProps)(DodgeQueueSettings)
+
+export { connectedComponent as DodgeQueueSettings }
 
 export function doInBackground(config) {
   const ipcRenderer = window.require("electron").ipcRenderer

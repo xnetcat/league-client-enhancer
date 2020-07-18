@@ -15,6 +15,7 @@ import "@rmwc/list/styles"
 import "@rmwc/snackbar/styles"
 import "@rmwc/switch/styles"
 import "@rmwc/grid/styles"
+import "@rmwc/textfield/styles"
 
 // App Imports
 import App from "./app"

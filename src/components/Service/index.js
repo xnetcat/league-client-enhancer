@@ -6,6 +6,9 @@ import { connect } from "react-redux"
 // Ui Imports
 import { Snackbar, SnackbarAction } from "@rmwc/snackbar"
 
+// App Imports
+import { setCurrentPlugins } from "../../actions/plugins"
+
 class Service extends Component {
   constructor(props) {
     super(props)
@@ -18,25 +21,20 @@ class Service extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    if (nextProps.plugins.data !== this.props.plugins.data) {
-      return true
-    }
-
-    if (nextProps.lcuData !== this.props.lcuData) {
-      return true
-    }
-
-    return nextState.snackbarOpen !== this.state.snackbarOpen
-  }
-
   componentDidMount() {
     this.setPlugins()
     this.listenForNotifications()
+    this.listenForConfigChange()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.setPlugins()
+    if (
+      prevProps.plugins.data !== this.props.plugins.data ||
+      prevProps.lcuData !== this.props.lcuData ||
+      prevState.snackbarOpen !== this.state.snackbarOpen
+    ) {
+      this.setPlugins()
+    }
   }
 
   setPlugins() {
@@ -92,6 +90,37 @@ class Service extends Component {
     })
   }
 
+  listenForConfigChange() {
+    const ipcRenderer = window.require("electron").ipcRenderer
+    ipcRenderer.on("config-data", (event, data) => {
+      const newArray = [...this.props.plugins.data]
+
+      const pluginIndex = this.props.plugins.data.indexOf(
+        this.props.plugins.data.find((plugin) => {
+          return plugin.name === data.pluginName
+        })
+      )
+
+      if (pluginIndex > -1) {
+        for (const job of this.state.backgroundJobs) {
+          if (data.pluginName === job.name) {
+            clearInterval(job.id)
+            const index = this.state.backgroundJobs.indexOf(job)
+
+            if (index > -1) {
+              this.state.backgroundJobs.splice(index, 1)
+            }
+          }
+        }
+
+        const config = { ...newArray[pluginIndex].config }
+        config[data.configName] = data.value
+        newArray[pluginIndex] = { ...newArray[pluginIndex], config: config }
+        this.props.setCurrentPlugins(newArray)
+      }
+    })
+  }
+
   render() {
     const ipcRenderer = window.require("electron").ipcRenderer
     return (
@@ -143,4 +172,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {})(Service)
+export default connect(mapStateToProps, { setCurrentPlugins })(Service)
