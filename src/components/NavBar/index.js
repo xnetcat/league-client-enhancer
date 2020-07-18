@@ -1,9 +1,9 @@
 // Imports
-import React, { Component } from "react";
+import React, { Component } from "react"
 // UI Imports
-import { Tab, TabBar } from "@rmwc/tabs";
+import { Tab, TabBar } from "@rmwc/tabs"
 // App imports
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 class NavBar extends Component {
   render() {
@@ -13,8 +13,8 @@ class NavBar extends Component {
         <Tab label="Plugins" icon="extension" tag={Link} to="/plugins" />
         <Tab label="Settings" icon="settings" tag={Link} to="/settings" />
       </TabBar>
-    );
+    )
   }
 }
 
-export default NavBar;
+export default NavBar

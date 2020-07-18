@@ -1,28 +1,28 @@
 // Imports
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 // UI Imports
-import { Typography } from "@rmwc/typography";
+import { Typography } from "@rmwc/typography"
 // App imports
-import { dataRemove, setCurrentData } from "../../actions/lcu-data";
-import { NavBar } from "../.";
+import { dataRemove, setCurrentData } from "../../actions/lcu-data"
+import { NavBar } from "../."
 
 class Layout extends Component {
   componentDidMount() {
-    const ipcRenderer = window.require("electron").ipcRenderer;
+    const ipcRenderer = window.require("electron").ipcRenderer
 
     ipcRenderer.on("lcu-load", (event, data) => {
-      this.props.setCurrentData(data);
-    });
+      this.props.setCurrentData(data)
+    })
 
     ipcRenderer.on("lcu-unload", () => {
-      this.props.dataRemove();
-    });
+      this.props.dataRemove()
+    })
   }
 
   render() {
-    const { isConnected } = this.props.lcuData;
+    const { isConnected } = this.props.lcuData
 
     if (isConnected) {
       return (
@@ -30,7 +30,7 @@ class Layout extends Component {
           <NavBar />
           {this.props.children}
         </>
-      );
+      )
     } else {
       return (
         <Typography
@@ -44,7 +44,7 @@ class Layout extends Component {
         >
           Please start League of Legends client
         </Typography>
-      );
+      )
     }
   }
 }
@@ -52,12 +52,12 @@ class Layout extends Component {
 Layout.propTypes = {
   lcuData: PropTypes.object.isRequired,
   setCurrentData: PropTypes.func.isRequired,
-};
+}
 
 function mapStateToProps(state) {
   return {
     lcuData: state.lcuData,
-  };
+  }
 }
 
-export default connect(mapStateToProps, { setCurrentData, dataRemove })(Layout);
+export default connect(mapStateToProps, { setCurrentData, dataRemove })(Layout)

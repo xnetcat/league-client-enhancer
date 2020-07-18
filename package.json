@@ -19,7 +19,8 @@
     "release": "npm run react-build && electron-builder --publish=onTag",
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"npm run react-start\" \"npm run electron-run\"",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "lint-fix": "eslint src --fix"
   },
   "dependencies": {
     "@rmwc/button": "6.1.3",

@@ -1,11 +1,11 @@
 // Imports
-import React, { Component } from "react";
+import React, { Component } from "react"
 // Ui Imports
-import { Card } from "@rmwc/card";
-import { ListDivider } from "@rmwc/list";
+import { Card } from "@rmwc/card"
+import { ListDivider } from "@rmwc/list"
 // App imports
-import PluginActions from "../PluginActions";
-import PluginPrimaryActions from "../PluginPrimaryActions";
+import PluginActions from "../PluginActions"
+import PluginPrimaryActions from "../PluginPrimaryActions"
 
 class PluginCard extends Component {
   render() {
@@ -29,8 +29,8 @@ class PluginCard extends Component {
         </Card>
         <br />
       </>
-    );
+    )
   }
 }
 
-export default PluginCard;
+export default PluginCard

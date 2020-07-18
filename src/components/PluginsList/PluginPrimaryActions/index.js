@@ -1,12 +1,12 @@
 // Imports
-import React, { useState } from "react";
+import React, { useState } from "react"
 // Ui imports
-import { CardActionButton, CardActions, CardPrimaryAction } from "@rmwc/card";
-import { Typography } from "@rmwc/typography";
-import { CollapsibleList } from "@rmwc/list";
+import { CardActionButton, CardActions, CardPrimaryAction } from "@rmwc/card"
+import { Typography } from "@rmwc/typography"
+import { CollapsibleList } from "@rmwc/list"
 
 function PluginPrimaryActions(props) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
 
   return (
     <CardPrimaryAction>
@@ -58,7 +58,7 @@ function PluginPrimaryActions(props) {
         </CollapsibleList>
       </CardActions>
     </CardPrimaryAction>
-  );
+  )
 }
 
-export default PluginPrimaryActions;
+export default PluginPrimaryActions

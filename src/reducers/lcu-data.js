@@ -1,10 +1,10 @@
-import isEmpty from "lodash/isEmpty";
-import { DATA_CURRENT_SET } from "../actions/lcu-data";
+import isEmpty from "lodash/isEmpty"
+import { DATA_CURRENT_SET } from "../actions/lcu-data"
 
 const initialState = {
   isConnected: false,
   data: null,
-};
+}
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
@@ -12,9 +12,9 @@ export default (state = initialState, action = {}) => {
       return {
         isConnected: !isEmpty(action.data),
         data: action.data,
-      };
+      }
 
     default:
-      return state;
+      return state
   }
-};
+}

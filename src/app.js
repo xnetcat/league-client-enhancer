@@ -1,11 +1,11 @@
 // Imports
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { ThemeProvider } from "@rmwc/theme";
+import React from "react"
+import { Route, Switch } from "react-router-dom"
+import { ThemeProvider } from "@rmwc/theme"
 // App Imports
-import { Layout, Service } from "./components";
-import { Home, Plugins, Settings } from "./views";
-import {DisableChatSettings, DodgeQueueSettings} from "./plugins"
+import { Layout, Service } from "./components"
+import { Home, Plugins, Settings } from "./views"
+import { DisableChatSettings, DodgeQueueSettings } from "./plugins"
 
 const theme = {
   primary: "#24aee9",
@@ -32,7 +32,7 @@ const theme = {
   textHintOnDark: "rgba(255, 255, 255, 0.5)",
   textDisabledOnDark: "rgba(255, 255, 255, 0.5)",
   textIconOnDark: "rgba(255, 255, 255, 0.5)",
-};
+}
 
 const App = () => (
   <ThemeProvider options={theme} className="app__root" tag="div">
@@ -46,8 +46,8 @@ const App = () => (
           <Route exact path="/settings" component={Settings} />
         </Layout>
       </Switch>
-      </Service>
+    </Service>
   </ThemeProvider>
-);
+)
 
-export default App;
+export default App
