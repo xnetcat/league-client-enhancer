@@ -72,7 +72,10 @@ class Service extends Component {
         (job) => job.name === plugin.name
       )
       if (!duplicate) {
-        this.state.backgroundJobs.push({ id: plugin.bg(), name: plugin.name })
+        this.state.backgroundJobs.push({
+          id: plugin.bg(plugin.config),
+          name: plugin.name,
+        })
       }
     }
   }

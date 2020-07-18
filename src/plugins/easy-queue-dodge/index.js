@@ -11,7 +11,7 @@ export class DodgeQueueSettings extends React.Component {
   }
 }
 
-export function doInBackground() {
+export function doInBackground(config) {
   const ipcRenderer = window.require("electron").ipcRenderer
   let inChampSelect = false
 
@@ -60,7 +60,7 @@ export function doInBackground() {
       method: "get",
       data: {},
     })
-  }, 1000)
+  }, config.interval)
 }
 
 export default function pluginInfo() {
@@ -68,6 +68,9 @@ export default function pluginInfo() {
     name: "easy-queue-dodge",
     author: "kko7",
     enabled: false,
+    config: {
+      interval: 1000,
+    },
     bg: doInBackground,
     shortDescription: "Dodge without closing the entire client.",
     longDescription: "As in title",
