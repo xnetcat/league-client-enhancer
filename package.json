@@ -10,7 +10,7 @@
     "email": "j4kub.kko7@gmail.com"
   },
   "scripts": {
-    "react-start": "cross-env BROWSER=none react-scripts start",
+    "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
@@ -18,7 +18,8 @@
     "electron-start": "electron .",
     "release": "npm run react-build && electron-builder --publish=onTag",
     "build": "npm run react-build && npm run electron-build",
-    "start": "concurrently \"npm run react-start\" \"npm run electron-run\""
+    "start": "concurrently \"npm run react-start\" \"npm run electron-run\"",
+    "lint": "eslint src"
   },
   "dependencies": {
     "@rmwc/button": "6.1.3",
@@ -52,10 +53,17 @@
   },
   "devDependencies": {
     "concurrently": "5.2.0",
-    "cross-env": "7.0.2",
     "electron": "9.1.0",
-    "prettier": "2.0.5",
     "electron-builder": "^22.7.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
+    "prettier": "2.0.5",
     "react-scripts": "3.4.1",
     "wait-on": "5.1.0"
   },
