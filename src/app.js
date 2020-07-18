@@ -5,7 +5,7 @@ import { ThemeProvider } from "@rmwc/theme"
 // App Imports
 import { Layout, Service } from "./components"
 import { Home, Plugins, Settings } from "./views"
-import { DisableChatSettings, DodgeQueueSettings } from "./plugins"
+import { DodgeQueueSettings } from "./plugins"
 
 const theme = {
   primary: "#24aee9",
@@ -39,7 +39,6 @@ const App = () => (
     <Service>
       <Switch>
         <Route path="/plugin/easy-queue-dodge" component={DodgeQueueSettings} />
-        <Route path="/plugin/disable-chat" component={DisableChatSettings} />
         <Layout className="app__content">
           <Route exact path="/" component={Home} />
           <Route exact path="/plugins" component={Plugins} />
