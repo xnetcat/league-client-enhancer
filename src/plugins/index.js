@@ -1,18 +1,16 @@
+/* eslint-disable prettier/prettier */
 import DodgeQueueInfo, {
-  DodgeQueueSettings,
-  doInBackground as DodgeQueueJob,
+  EasyQueueDodgeSettings,
 } from "./easy-queue-dodge"
 
 import AutoSaveRunesInfo, {
   AutoSaveRunesSettings,
-  doInBackground as AutoSaveRunesJob,
+  AutoSaveRunesWindow,
 } from "./auto-save-runes"
 
-export {
-  DodgeQueueSettings,
-  DodgeQueueJob,
-  AutoSaveRunesSettings,
-  AutoSaveRunesJob,
+export { 
+  EasyQueueDodgeSettings,
+  AutoSaveRunesSettings, AutoSaveRunesWindow
 }
 
 export default function pluginsInfo() {

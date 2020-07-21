@@ -35,7 +35,10 @@ class PluginActions extends React.Component {
     const isDev = window.require("electron-is-dev")
     event.preventDefault()
     window.open(
-      isDev ? `http://localhost:3000/#/plugin/${name}` : `#/plugin/${name}`
+      isDev
+        ? `http://localhost:3000/#/plugin/${name}/settings`
+        : `#/plugin/${name}/settings`,
+      `${name} settings`
     )
   }
 
