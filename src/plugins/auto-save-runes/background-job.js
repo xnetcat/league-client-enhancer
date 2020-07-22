@@ -4,7 +4,6 @@ export default function doInBackground(config) {
 
   ipcRenderer.on("lcu-api-data", (event, arg) => {
     if (arg.pluginName === "auto-save-runes") {
-      // eslint-disable-next-line no-unused-vars
       if (arg.response.status === 404) {
         inChampSelect = false
       } else {

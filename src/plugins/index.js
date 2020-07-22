@@ -5,11 +5,13 @@ import DodgeQueueInfo, {
 
 import AutoSaveRunesInfo, {
   AutoSaveRunesSettings,
+  AutoSaveRunesWindow
 } from "./auto-save-runes"
 
 export { 
   EasyQueueDodgeSettings,
   AutoSaveRunesSettings,
+  AutoSaveRunesWindow
 }
 
 export default function pluginsInfo() {
