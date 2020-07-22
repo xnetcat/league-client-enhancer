@@ -170,28 +170,28 @@ ipcMain.on("lcu-api-request", (event, data) => {
       }),
     })
       .then((response) => {
-        mainWindow.webContents.send("lcu-api-data", {
+        const returnValue = {
           endpoint: data.endpoint,
           pluginName: data.pluginName,
           response: {
             status: response.status,
             data: response.data,
           },
-        })
+        }
+        mainWindow.webContents.send("lcu-api-data", returnValue)
+        return returnValue
       })
       .catch((error) => {
-        if (error.response === undefined) {
-          console.log("[Electron] Not connected to lcu")
-          // We send few requests before LCUData is null,
-          // so we can ignore this
-        } else {
-          mainWindow.webContents.send("lcu-api-data", {
+        if (error.response !== undefined) {
+          const returnValue = {
             pluginName: data.pluginName,
             response: {
               status: error.response.status,
               data: error.response.data,
             },
-          })
+          }
+          mainWindow.webContents.send("lcu-api-data", returnValue)
+          return returnValue
         }
       })
   }
@@ -199,8 +199,10 @@ ipcMain.on("lcu-api-request", (event, data) => {
 
 ipcMain.on("notification-request", (event, data) => {
   mainWindow.webContents.send("notification-data", data)
+  return data
 })
 
 ipcMain.on("plugins-config-change", (event, data) => {
   mainWindow.webContents.send("config-data", data)
+  return data
 })
