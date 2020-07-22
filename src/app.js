@@ -2,14 +2,16 @@
 // Imports
 import React from "react"
 import { Route, Switch } from "react-router-dom"
+
+// Ui Imports
 import { ThemeProvider } from "@rmwc/theme"
+
 // App Imports
 import { Layout, Service } from "./components"
 import { Home, Plugins, Settings } from "./views"
 import { 
   EasyQueueDodgeSettings,
-  AutoSaveRunesSettings,
-  AutoSaveRunesWindow
+  MoreRunesSettings, MoreRunesWindow
 } from "./plugins"
 
 const theme = {
@@ -45,9 +47,9 @@ const App = () => (
       <Switch>
         {/* Plugins settings */}
         <Route path="/plugin/easy-queue-dodge/settings" component={EasyQueueDodgeSettings} />
-        <Route path="/plugin/auto-save-runes/settings" component={AutoSaveRunesSettings} />
+        <Route path="/plugin/more-runes/settings" component={MoreRunesSettings} />
         {/* Plugin window */}
-        <Route path="/plugin/auto-save-runes/window" component={AutoSaveRunesWindow} />
+        <Route path="/plugin/more-runes/window" component={MoreRunesWindow} />
         <Layout className="app__content">
           {/* Main routes */}
           <Route exact path="/" component={Home} />

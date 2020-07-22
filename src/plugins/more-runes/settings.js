@@ -4,7 +4,7 @@ import React from "react"
 // Ui Imports
 import { TextField } from "@rmwc/textfield"
 
-export class AutoSaveRunesSettings extends React.Component {
+export default class MoreRunesSettings extends React.Component {
   changeConfig(event, pluginName, configName) {
     event.preventDefault()
     if (event.target.value.match(/^\d{3,4}$/)) {
@@ -38,5 +38,3 @@ export class AutoSaveRunesSettings extends React.Component {
     )
   }
 }
-
-export default AutoSaveRunesSettings

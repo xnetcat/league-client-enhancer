@@ -4,13 +4,19 @@ export default function doInBackground(config) {
 
   ipcRenderer.on("lcu-api-data", (event, arg) => {
     if (arg.pluginName === "more-runes") {
-      if (arg.response.status === 404) {
-        inChampSelect = false
-      } else {
-        if (!inChampSelect) {
-          window.open("http://localhost:3000/#/plugin/more-runes/window")
-        }
-        inChampSelect = true
+      switch (arg.endpoint) {
+        case "/lol-champ-select/v1/session":
+          if (arg.response.status === 404) {
+            inChampSelect = false
+          } else {
+            if (!inChampSelect) {
+              window.open("http://localhost:3000/#/plugin/more-runes/window")
+            }
+            inChampSelect = true
+          }
+          break
+        default:
+          break
       }
     }
   })

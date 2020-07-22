@@ -1,7 +1,7 @@
 import pluginInfo from "./header"
-import AutoSaveRunesSettings from "./settings"
-import AutoSaveRunesWindow from "./window"
+import MoreRunesSettings from "./settings"
+import MoreRunesWindow from "./window"
 
 export default pluginInfo
 
-export { AutoSaveRunesSettings, AutoSaveRunesWindow }
+export { MoreRunesSettings, MoreRunesWindow }
