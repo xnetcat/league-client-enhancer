@@ -133,7 +133,7 @@ class Service extends Component {
             stacked
             dismissesOnAction
             action={
-              this.state.snackbarActions &&
+              this.state.snackbarActions.length >= 1 &&
               this.state.snackbarActions.map((action) => {
                 return (
                   <SnackbarAction
