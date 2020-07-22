@@ -171,6 +171,7 @@ ipcMain.on("lcu-api-request", (event, data) => {
     })
       .then((response) => {
         mainWindow.webContents.send("lcu-api-data", {
+          endpoint: data.endpoint,
           pluginName: data.pluginName,
           response: {
             status: response.status,
