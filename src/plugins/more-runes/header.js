@@ -2,14 +2,15 @@ import doInBackground from "./background-job"
 
 export default function pluginInfo() {
   return {
-    name: "auto-save-runes",
+    name: "more-runes",
     author: "kko7",
     enabled: false,
     config: {
       interval: 1000,
     },
     bg: doInBackground,
-    shortDescription: "Automatically save runes every x seconds",
-    longDescription: "As in title",
+    shortDescription: "Choose from more rune pages",
+    longDescription:
+      "At the start of champion select opens new window that allows to select/customize runes",
   }
 }
