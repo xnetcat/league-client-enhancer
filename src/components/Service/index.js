@@ -132,27 +132,32 @@ class Service extends Component {
             message={this.state.snackbarMessage}
             stacked
             dismissesOnAction
-            action={this.state.snackbarActions.map((action) => {
-              return (
-                <SnackbarAction
-                  label={action.label}
-                  onClick={(event) => {
-                    event.preventDefault()
-                    this.setState({ snackbarOpen: false }, () => {
-                      for (const object of action.toSend) {
-                        ipcRenderer.send(object.channel, {
-                          lcuData: object.lcuData,
-                          endpoint: object.endpoint,
-                          method: object.method,
-                          data: object.data,
-                          pluginName: object.pluginName,
-                        })
-                      }
-                    })
-                  }}
-                />
-              )
-            })}
+            action={
+              this.state.snackbarActions &&
+              this.state.snackbarActions.map((action) => {
+                return (
+                  <SnackbarAction
+                    label={action.label}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      this.setState({ snackbarOpen: false }, () => {
+                        if (action.toSend.length >= 1) {
+                          for (const object of action.toSend) {
+                            ipcRenderer.send(object.channel, {
+                              lcuData: object.lcuData,
+                              endpoint: object.endpoint,
+                              method: object.method,
+                              data: object.data,
+                              pluginName: object.pluginName,
+                            })
+                          }
+                        }
+                      })
+                    }}
+                  />
+                )
+              })
+            }
             leading
             timeout={-1}
           />
