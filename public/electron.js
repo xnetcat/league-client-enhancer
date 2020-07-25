@@ -154,10 +154,11 @@ ipcMain.on("tray", (event, show) => {
   )
 })
 
-ipcMain.on("lcu-api-request", (event, data) => {
+async function handleApiRequest(invoke, data) {
+  let returnValue
   if (LCUData) {
     const { username, password, address, port, protocol } = LCUData
-    axios({
+    await axios({
       method: data.method,
       url: `${protocol}://${address}:${port}${data.endpoint}`,
       headers: {
@@ -170,7 +171,7 @@ ipcMain.on("lcu-api-request", (event, data) => {
       }),
     })
       .then((response) => {
-        const returnValue = {
+        returnValue = {
           endpoint: data.endpoint,
           pluginName: data.pluginName,
           response: {
@@ -178,31 +179,37 @@ ipcMain.on("lcu-api-request", (event, data) => {
             data: response.data,
           },
         }
-        mainWindow.webContents.send("lcu-api-data", returnValue)
-        return returnValue
+        if (!invoke) mainWindow.webContents.send("lcu-api-data", returnValue)
       })
       .catch((error) => {
         if (error.response !== undefined) {
-          const returnValue = {
+          returnValue = {
             pluginName: data.pluginName,
             response: {
               status: error.response.status,
               data: error.response.data,
             },
           }
-          mainWindow.webContents.send("lcu-api-data", returnValue)
-          return returnValue
+          if (!invoke) mainWindow.webContents.send("lcu-api-data", returnValue)
         }
       })
+    return returnValue
   }
+}
+
+ipcMain.on("lcu-api-request", (event, data) => {
+  handleApiRequest(false, data)
+})
+
+ipcMain.handle("lcu-api-request", async (event, data) => {
+  console.log(await handleApiRequest(true, data))
+  return await handleApiRequest(true, data)
 })
 
 ipcMain.on("notification-request", (event, data) => {
   mainWindow.webContents.send("notification-data", data)
-  return data
 })
 
 ipcMain.on("plugins-config-change", (event, data) => {
   mainWindow.webContents.send("config-data", data)
-  return data
 })
