@@ -70,9 +70,9 @@
     "wait-on": "5.1.0"
   },
   "build": {
-    "appId": "com.github.kko7.league-client-enhancer",
+    "appId": "com.github.0xnetcat.league-client-enhancer",
     "productName": "League Client Enhancer",
-    "copyright": "Copyright © 2020 KKo7",
+    "copyright": "Copyright © 2020 0xNetcat",
     "nsis": {
       "license": "LICENSE.md"
     },
