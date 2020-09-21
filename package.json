@@ -18,7 +18,7 @@
     "electron-start": "electron .",
     "release": "npm run react-build && electron-builder --publish=onTag",
     "build": "npm run react-build && npm run electron-build",
-    "start": "concurrently \"npm run react-start\" \"npm run electron-run\"",
+    "start": "concurrently \"npm run react-start\" \"npm run electron-start\"",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix"
   },
