@@ -202,7 +202,6 @@ ipcMain.on("lcu-api-request", (event, data) => {
 })
 
 ipcMain.handle("lcu-api-request", async (event, data) => {
-  console.log(await handleApiRequest(true, data))
   return await handleApiRequest(true, data)
 })
 
