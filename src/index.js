@@ -24,13 +24,13 @@ import { store, persistedStore } from "./createStore"
 
 // Render App
 ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistedStore}>
-      <Router>
-        <App />
-      </Router>
-    </PersistGate>
-  </Provider>,
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistedStore}>
+            <Router>
+                <App />
+            </Router>
+        </PersistGate>
+    </Provider>,
 
-  document.getElementById("root")
+    document.getElementById("root")
 )

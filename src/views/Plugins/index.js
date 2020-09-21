@@ -7,23 +7,23 @@ import PropTypes from "prop-types"
 import { PluginsList } from "../../components"
 
 class Plugins extends Component {
-  render() {
-    return (
-      <div>
-        <PluginsList plugins={this.props.plugins.data} />
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div>
+                <PluginsList plugins={this.props.plugins.data} />
+            </div>
+        )
+    }
 }
 
 Plugins.propTypes = {
-  plugins: PropTypes.object.isRequired,
+    plugins: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
-  return {
-    plugins: state.plugins,
-  }
+    return {
+        plugins: state.plugins,
+    }
 }
 
 export default connect(mapStateToProps, {})(Plugins)
