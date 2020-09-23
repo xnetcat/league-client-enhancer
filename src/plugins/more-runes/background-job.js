@@ -27,7 +27,7 @@ export default function doInBackground(config) {
             pluginName: "more-runes",
             endpoint: "/lol-champ-select/v1/session",
             method: "get",
-            data: {},
+            body: {},
         })
     }, config.interval)
 }

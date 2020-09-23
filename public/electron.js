@@ -15,200 +15,210 @@ let mainWindow, tray, LCUData
 
 // noinspection JSValidateTypes
 updateElectronApp({
-  repo: "kko7/league-client-enhancer",
-  updateInterval: "20 minutes",
+    repo: "0xNetcat/league-client-enhancer",
+    updateInterval: "20 minutes",
 })
 
 const lock = app.requestSingleInstanceLock()
 if (!lock) app.quit()
 else {
-  app.on("second-instance", function (argv, cwd) {
-    if (mainWindow) {
-      if (!mainWindow.isVisible()) mainWindow.show()
-      else if (mainWindow.isMinimized()) mainWindow.restore()
+    app.on("second-instance", function (argv, cwd) {
+        if (mainWindow) {
+            if (!mainWindow.isVisible()) mainWindow.show()
+            else if (mainWindow.isMinimized()) mainWindow.restore()
 
-      mainWindow.focus()
-    }
-  })
+            mainWindow.focus()
+        }
+    })
 }
 
 function createWindow() {
-  let windowLoaded = false
+    let windowLoaded = false
 
-  mainWindow = new BrowserWindow({
-    minHeight: 680,
-    minWidth: 800,
-    show: false,
-    useContentSize: true,
-    title: "League Client Enhancer",
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
-      nativeWindowOpen: true,
-    },
-  })
+    mainWindow = new BrowserWindow({
+        minHeight: 680,
+        minWidth: 800,
+        show: false,
+        useContentSize: true,
+        title: "League Client Enhancer",
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            nativeWindowOpen: true,
+        },
+    })
 
-  mainWindow
-    .loadURL(
-      isDev
-        ? "http://localhost:3000"
-        : `file://${path.join(__dirname, "../build/index.html")}`
-    )
-    .then(() => console.log("[Electron] Loaded mainWindow"))
-    .catch(console.error)
+    mainWindow
+        .loadURL(
+            isDev
+                ? "http://localhost:3000"
+                : `file://${path.join(__dirname, "../build/index.html")}`
+        )
+        .then(() => console.log("[Electron] Loaded mainWindow"))
+        .catch(console.error)
 
-  mainWindow.webContents.on("did-finish-load", () => {
-    windowLoaded = true
+    mainWindow.webContents.on("did-finish-load", () => {
+        windowLoaded = true
 
-    mainWindow.show()
+        mainWindow.show()
 
-    if (!LCUData) {
-      return
-    }
+        if (!LCUData) {
+            return
+        }
 
-    mainWindow.webContents.send("lcu-load", LCUData)
-  })
+        mainWindow.webContents.send("lcu-load", LCUData)
+    })
 
-  if (isDev) mainWindow.openDevTools({ mode: "detach" })
+    if (isDev) mainWindow.openDevTools({ mode: "detach" })
 
-  mainWindow.on("closed", () => {
-    if (tray && !tray.isDestroyed()) tray.destroy()
-    mainWindow = tray = null
-  })
+    mainWindow.on("closed", () => {
+        if (tray && !tray.isDestroyed()) tray.destroy()
+        mainWindow = tray = null
+    })
 
-  connector.on("connect", (data) => {
-    LCUData = data
-    mainWindow.webContents.send("lcu-load", data)
-  })
+    connector.on("connect", (data) => {
+        LCUData = data
+        mainWindow.webContents.send("lcu-load", data)
+    })
 
-  connector.on("disconnect", () => {
-    LCUData = null
+    connector.on("disconnect", () => {
+        LCUData = null
 
-    if (windowLoaded) {
-      mainWindow.webContents.send("lcu-unload")
-    }
-  })
+        if (windowLoaded) {
+            mainWindow.webContents.send("lcu-unload")
+        }
+    })
 
-  connector.start()
+    connector.start()
 }
 
 app.on(
-  "certificate-error",
-  (event, webContents, url, error, certificate, callback) => {
-    if (
-      url.match(
-        /https:\/\/127.0.0.1(:[0-9]+)?(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?/g
-      )
-    ) {
-      event.preventDefault()
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(true)
-    } else {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(false)
+    "certificate-error",
+    (event, webContents, url, error, certificate, callback) => {
+        if (
+            url.match(
+                /https:\/\/127.0.0.1(:[0-9]+)?(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?/g
+            )
+        ) {
+            event.preventDefault()
+            // eslint-disable-next-line standard/no-callback-literal
+            callback(true)
+        } else {
+            // eslint-disable-next-line standard/no-callback-literal
+            callback(false)
+        }
     }
-  }
 )
 
 app.on("ready", () => {
-  createWindow()
+    createWindow()
 })
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit()
-  }
+    if (process.platform !== "darwin") {
+        app.quit()
+    }
 })
 
 app.on("activate", () => {
-  if (mainWindow === null) {
-    createWindow()
-  }
+    if (mainWindow === null) {
+        createWindow()
+    }
 })
 
 ipcMain.on("win-show", (event, inactive) => {
-  if (!mainWindow.isVisible()) mainWindow[inactive ? "showInactive" : "show"]()
+    if (!mainWindow.isVisible())
+        mainWindow[inactive ? "showInactive" : "show"]()
 })
 
 ipcMain.on("win-hide", () => {
-  mainWindow.hide()
+    mainWindow.hide()
 })
 
 ipcMain.on("tray", (event, show) => {
-  if (show && tray && !tray.isDestroyed()) return
-  else if (!show) {
-    if (!tray || (tray && tray.isDestroyed())) return
-    return tray.destroy()
-  }
+    if (show && tray && !tray.isDestroyed()) return
+    else if (!show) {
+        if (!tray || (tray && tray.isDestroyed())) return
+        return tray.destroy()
+    }
 
-  tray = new Tray(
-    path.join(
-      __dirname,
-      `/favicon.${process.platform === "win32" ? "ico" : "png"}`
+    tray = new Tray(
+        path.join(
+            __dirname,
+            `/favicon.${process.platform === "win32" ? "ico" : "png"}`
+        )
     )
-  )
-  tray.setToolTip("Click here to show League Client Enhancer")
+    tray.setToolTip("Click here to show League Client Enhancer")
 
-  tray.on("click", () =>
-    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.showInactive()
-  )
+    tray.on("click", () =>
+        mainWindow.isVisible() ? mainWindow.hide() : mainWindow.showInactive()
+    )
 })
 
 async function handleApiRequest(invoke, data) {
-  let returnValue
-  if (LCUData) {
-    const { username, password, address, port, protocol } = LCUData
-    await axios({
-      method: data.method,
-      url: `${protocol}://${address}:${port}${data.endpoint}`,
-      headers: {
-        Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString(
-          "base64"
-        )}`,
-      },
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false,
-      }),
-    })
-      .then((response) => {
-        returnValue = {
-          endpoint: data.endpoint,
-          pluginName: data.pluginName,
-          response: {
-            status: response.status,
-            data: response.data,
-          },
-        }
-        if (!invoke) mainWindow.webContents.send("lcu-api-data", returnValue)
-      })
-      .catch((error) => {
-        if (error.response !== undefined) {
-          returnValue = {
-            pluginName: data.pluginName,
-            response: {
-              status: error.response.status,
-              data: error.response.data,
+    let returnValue
+    if (LCUData) {
+        const { username, password, address, port, protocol } = LCUData
+        await axios({
+            method: data.method,
+            url: `${protocol}://${address}:${port}${data.endpoint}`,
+            data:
+                data.body.value && data.body.isJson
+                    ? data.body.value
+                    : new URLSearchParams(data.body.value).toString(),
+            headers: {
+                "content-type": data.body.isJson
+                    ? "application/json"
+                    : "application/x-www-form-urlencoded",
+                Authorization: `Basic ${Buffer.from(
+                    `${username}:${password}`
+                ).toString("base64")}`,
             },
-          }
-          if (!invoke) mainWindow.webContents.send("lcu-api-data", returnValue)
-        }
-      })
-    return returnValue
-  }
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
+        })
+            .then((response) => {
+                returnValue = {
+                    endpoint: data.endpoint,
+                    pluginName: data.pluginName,
+                    response: {
+                        status: response.status,
+                        data: response.data,
+                    },
+                }
+                if (!invoke)
+                    mainWindow.webContents.send("lcu-api-data", returnValue)
+            })
+            .catch((error) => {
+                if (error.response !== undefined) {
+                    returnValue = {
+                        pluginName: data.pluginName,
+                        response: {
+                            status: error.response.status,
+                            data: error.response.data,
+                        },
+                    }
+                    if (!invoke)
+                        mainWindow.webContents.send("lcu-api-data", returnValue)
+                }
+            })
+        return returnValue
+    }
 }
 
-ipcMain.on("lcu-api-request", (event, data) => {
-  handleApiRequest(false, data)
+ipcMain.on("lcu-api-request", async (event, data) => {
+    await handleApiRequest(false, data)
 })
 
 ipcMain.handle("lcu-api-request", async (event, data) => {
-  return await handleApiRequest(true, data)
+    return await handleApiRequest(true, data)
 })
 
 ipcMain.on("notification-request", (event, data) => {
-  mainWindow.webContents.send("notification-data", data)
+    mainWindow.webContents.send("notification-data", data)
 })
 
 ipcMain.on("plugins-config-change", (event, data) => {
-  mainWindow.webContents.send("config-data", data)
+    mainWindow.webContents.send("config-data", data)
 })

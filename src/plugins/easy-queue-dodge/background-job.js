@@ -22,8 +22,11 @@ export default function doInBackground(config) {
                                                 endpoint:
                                                     "/lol-login/v1/session/invoke?destination=gameService&method=quitGame",
                                                 method: "post",
-                                                data: {
-                                                    args: "%5B%5D",
+                                                body: {
+                                                    isJson: false,
+                                                    value: {
+                                                        args: "%5B%5D",
+                                                    },
                                                 },
                                                 pluginName: "easy-queue-dodge",
                                             },
@@ -31,7 +34,15 @@ export default function doInBackground(config) {
                                                 channel: "lcu-api-request",
                                                 endpoint: "/lol-lobby/v2/lobby",
                                                 method: "delete",
-                                                data: {},
+                                                body: {},
+                                                pluginName: "easy-queue-dodge",
+                                            },
+                                            {
+                                                channel: "lcu-api-request",
+                                                endpoint:
+                                                    "/riotclient/kill-and-restart-ux",
+                                                method: "postj4",
+                                                body: {},
                                                 pluginName: "easy-queue-dodge",
                                             },
                                         ],
@@ -52,7 +63,7 @@ export default function doInBackground(config) {
             pluginName: "easy-queue-dodge",
             endpoint: "/lol-champ-select/v1/session",
             method: "get",
-            data: {},
+            body: {},
         })
     }, config.interval)
 }

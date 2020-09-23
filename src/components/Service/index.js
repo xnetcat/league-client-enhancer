@@ -160,8 +160,8 @@ class Service extends Component {
                                                                         object.endpoint,
                                                                     method:
                                                                         object.method,
-                                                                    data:
-                                                                        object.data,
+                                                                    body:
+                                                                        object.body,
                                                                     pluginName:
                                                                         object.pluginName,
                                                                 }
