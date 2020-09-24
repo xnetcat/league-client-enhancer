@@ -41,7 +41,7 @@ export default function doInBackground(config) {
                                                 channel: "lcu-api-request",
                                                 endpoint:
                                                     "/riotclient/kill-and-restart-ux",
-                                                method: "postj4",
+                                                method: "post",
                                                 body: {},
                                                 pluginName: "easy-queue-dodge",
                                             },
