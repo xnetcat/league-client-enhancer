@@ -70,7 +70,7 @@
     "wait-on": "5.1.0"
   },
   "build": {
-    "appId": "com.github.0xnetcat.league-client-enhancer",
+    "appId": "com.github.xnetcat.league-client-enhancer",
     "productName": "League Client Enhancer",
     "copyright": "Copyright © 2020 0xNetcat",
     "nsis": {
