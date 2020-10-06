@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "concurrently": "5.2.0",
-    "electron": "9.1.0",
+    "electron": "9.3.0",
     "electron-builder": "^22.7.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-config-standard": "14.1.1",
